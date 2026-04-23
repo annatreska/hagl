@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Have a Good Look</title>
+  <!--
+    Font: Transducer Light + Bold (Wortmeister)
+    Umieść pliki w folderze /fonts/:
+      fonts/Transducer-Light.woff2
+      fonts/Transducer-Bold.woff2
+    Tymczasowo używany jest Barlow jako fallback.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;700&family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=16">
+</head>
+<body>
+
+  <!-- Mobile top bar (hidden on desktop) -->
+  <div class="mobile-bar" id="mobile-bar">
+    <a href="#" class="mobile-logo-link logo-link">
+      <img src="_strona_HaGL/HaGL.svg" alt="Have a Good Look" class="logo mobile-logo">
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Overlay behind mobile sidebar -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <div class="layout">
+
+    <!-- ── SIDEBAR ──────────────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="sidebar-top">
+        <a href="#" class="logo-link desktop-logo-link" data-action="home">
+          <img src="_strona_HaGL/HaGL.svg" alt="Have a Good Look" class="logo">
+        </a>
+
+        <nav class="menu" aria-label="Główna nawigacja">
+          <a class="menu-item active" data-tab="gallery" href="#">Galeria</a>
+          <a class="menu-item" data-tab="events"  href="#">Wydarzenia</a>
+          <a class="menu-item" data-tab="manifesto" href="#">Manifest</a>
+        </nav>
+
+        <!-- News – hidden unless newsConfig has active text -->
+        <section class="news-section" id="news-section" hidden aria-live="polite">
+          <p class="news-text" id="news-text"></p>
+        </section>
+
+        <!-- Artwork info – shown when a gallery image is selected -->
+        <section class="artwork-info" id="artwork-info" hidden>
+          <p class="info-row info-num"    id="info-num"></p>
+          <p class="info-row info-author" id="info-author"></p>
+          <p class="info-row info-en"     id="info-en"></p>
+          <p class="info-row info-pl"     id="info-pl"></p>
+          <p class="info-row info-es"     id="info-es"></p>
+          <a class="bio-btn" id="bio-btn" href="#" title="Biografia obiektu"></a>
+        </section>
+
+        <!-- Event info – shown when an event image is selected -->
+        <section class="event-info" id="event-info" hidden>
+          <p class="info-row info-event-label" id="info-event-label"></p>
+          <p class="info-row info-event-desc"  id="info-event-desc"></p>
+          <div class="info-event-links"        id="info-event-links" hidden></div>
+          <p class="info-row info-event-pos"   id="info-event-pos"></p>
+        </section>
+      </div>
+
+      <div class="sidebar-footer">
+        <a class="instagram-link" id="instagram-link" href="https://www.instagram.com/have_agoodlook/" target="_blank" rel="noopener" title="Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor"/>
+          </svg>
+        </a>
+        <p class="copyright">© Have a Good Look Collective</p>
+      </div>
+    </aside>
+
+    <!-- ── CONTENT ───────────────────────────────────────────────── -->
+    <main class="content" id="content">
+
+      <!-- Gallery tab -->
+      <div class="tab-panel" id="tab-gallery">
+        <div class="grid-wrap" id="gallery-grid-wrap">
+          <div class="masonry-grid" id="gallery-grid"></div>
+        </div>
+        <div class="detail-panel" id="gallery-detail" hidden>
+          <button class="close-btn" id="gallery-close" aria-label="Zamknij">&times;</button>
+          <div class="detail-images">
+            <img class="detail-img detail-front" id="gallery-front" src="" alt="">
+            <img class="detail-img detail-back"  id="gallery-back"  src="" alt="" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- Events tab -->
+      <div class="tab-panel" id="tab-events" hidden>
+        <div class="grid-wrap" id="events-grid-wrap">
+          <div class="masonry-grid" id="events-grid"></div>
+        </div>
+        <div class="detail-panel" id="events-detail" hidden>
+          <button class="close-btn" id="events-close" aria-label="Zamknij">&times;</button>
+          <!-- scrollable image area -->
+          <div class="events-img-scroll">
+            <div class="detail-images">
+              <img class="detail-img detail-front" id="events-img" src="" alt="">
+            </div>
+          </div>
+          <!-- nav stays outside scroll — always at same vertical position -->
+          <div class="event-nav" id="event-nav">
+            <button class="nav-btn" id="events-prev" aria-label="Poprzednie">&#8592;</button>
+            <button class="nav-btn" id="events-next" aria-label="Następne">&#8594;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manifesto tab -->
+      <div class="tab-panel" id="tab-manifesto" hidden>
+        <div class="manifesto-left">
+          <div class="manifesto-text">
+            <p>Jak odróżnić wynalazek od dizajnu, dizajn od sztuki?<br>
+            Do której grupy należy ta aluminiowa chochelka? Jest stara, sentymentalna, podniszczona, aluminiowa i piekielnie wygodna – „cudownie użyteczna". A czy to nie powinno być definicją dobrego dizajnu? Pomyśl, czym dla Ciebie są dizajn, sztuka i wynalazczość.</p>
+            <p>Czy patriarchalna narracja w historii projektowania ma znaczenie? Jaką rolę w tej wizji mogą odgrywać narzędzia służące niewidzialnej pracy? A co z marketingiem i sprzedażą? Narodziny kapitalizmu to początek dizajnu i usprawnień pracy w kuchni, czyż nie? Czy w takim razie patrzysz na gadżet czy na narzędzie? Mieszkasz w konkretnym miejscu na Ziemi – masz swoją tradycję. Czy Twoje ulubione narzędzia kuchenne są uniwersalne?</p>
+            <p>Wyjmując narzędzia z zaplecza kuchni, pozbawiamy je na chwilę oczywistego kontekstu. Przyglądamy się im uważniej. Malowanie ich portretów zbliża nas do zrozumienia, czym różnią się dizajn, sztuka i wynalazczość.</p>
+            <h3 class="manifesto-rules-title">Regulamin</h3>
+            <ol class="manifesto-rules">
+              <li>Widzowie mogą swobodnie włączać się w działania kolektywu poprzez malowanie portretów narzędzi kuchennych – własnych lub dostępnych na miejscu.</li>
+              <li>Osoba tworząca wybiera sama podłoże i narzędzia spośród udostępnionych na potrzeby happeningu.</li>
+              <li>Kolektyw może wykonać portret narzędzia przyniesionego przez widzów, ale właściciele narzędzi nie mogą ingerować w wybór charakteru portretu. Portrety powstają w stylistyce, którą samo narzędzie narzuci osobie tworzącej.</li>
+              <li>Kolektyw tworzy portrety w swoim własnym tempie i nie wolno zgłaszać uwag do jego tempa pracy.</li>
+              <li>Kolektyw zastrzega sobie prawo do publikacji wizerunków wszystkich ulubionych narzędzi kuchennych.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="manifesto-right">
+          <img class="manifesto-obj-img" src="_strona_HaGL/chochla_objekt.png" alt="chochla">
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ── ADMIN PANEL ─────────────────────────────────────────────── -->
+  <!-- Otwórz przez: URL?admin lub Ctrl+Shift+A -->
+  <div class="admin-overlay" id="admin-overlay" hidden>
+    <div class="admin-panel">
+      <div class="admin-header">
+        <h2 class="admin-title">Edycja nazw obiektów</h2>
+        <div class="admin-actions">
+          <span class="admin-save-note">Zapis automatyczny</span>
+          <button class="admin-export-btn" id="admin-export">Eksportuj JSON</button>
+          <button class="admin-close-btn" id="admin-close" aria-label="Zamknij panel">&times;</button>
+        </div>
+      </div>
+      <div class="admin-col-headers">
+        <div class="admin-col-header"></div>
+        <div class="admin-col-header">Autor</div>
+        <div class="admin-col-header">English</div>
+        <div class="admin-col-header">Polski</div>
+        <div class="admin-col-header">Español</div>
+      </div>
+      <div class="admin-list" id="admin-list"></div>
+    </div>
+  </div>
+
+  <script src="data.js?v=4"></script>
+  <script src="script.js?v=4"></script>
+</body>
+</html>

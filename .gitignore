@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Design / source files (not needed on the website)
+_strona_HaGL/*.psd
+_strona_HaGL/*.pdf
+_strona_HaGL/HaGL_logo.jpg
+_strona_HaGL/HaGL_logo.png
+_strona_HaGL/tlo_manifest.jpg
+_strona_HaGL/manifest_objekt.png
+_strona_HaGL/_manifest2.jpg
+_strona_HaGL/_chochla_rozklad*.jpg
+
+# Claude Code internal tooling
+.claude/
