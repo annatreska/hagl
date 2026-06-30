@@ -85,7 +85,13 @@ function switchTab(tabName) {
 
   // Events list lives in the sidebar – only visible on the Wydarzenia tab
   $('events-sidebar').hidden = tabName !== 'events';
-  if (tabName === 'events') $('news-section').hidden = true;
+  if (tabName === 'events') {
+    $('news-section').hidden = true;
+    // Clicking "Wydarzenia" always resets back to all photos, shuffled
+    eventFilterKey = null;
+    buildEventsGrid();
+    highlightFilteredEvent();
+  }
 
   // Close any open details when switching tabs
   closeGalleryDetail();
