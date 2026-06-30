@@ -2,6 +2,7 @@
 let currentTab       = 'gallery';
 let selectedArtwork  = null;   // index into artworks[]
 let selectedEventIdx = null;   // index into allEventImages[]
+let eventFilterKey   = null;   // eventKey to filter the events grid by, or null = show all
 
 /* ── DOM refs ──────────────────────────────────────────────────────── */
 const $ = id => document.getElementById(id);
@@ -19,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   loadNamesFromStorage();
   initNews();
   buildGallery();
-  buildEventsList();
+  buildEventsSidebarList();
+  buildEventsGrid();
   bindMenu();
   bindGalleryDetail();
   bindEventsDetail();
@@ -80,6 +82,10 @@ function switchTab(tabName) {
   document.querySelectorAll('.menu-item').forEach(link => {
     link.classList.toggle('active', link.dataset.tab === tabName);
   });
+
+  // Events list lives in the sidebar – only visible on the Wydarzenia tab
+  $('events-sidebar').hidden = tabName !== 'events';
+  if (tabName === 'events') $('news-section').hidden = true;
 
   // Close any open details when switching tabs
   closeGalleryDetail();
@@ -162,8 +168,8 @@ function closeGalleryDetail() {
   $('artwork-info').hidden = true;
 }
 
-/* ── Events: build chronological list ────────────────────────────────── */
-function buildEventsList() {
+/* ── Events: build sidebar list (chronological filter) ───────────────── */
+function buildEventsSidebarList() {
   // Announcement link (upcoming event) at the top
   const announcement = $('event-announcement');
   if (announcementConfig.text) {
@@ -205,8 +211,10 @@ function buildEventsList() {
     }
 
     row.addEventListener('click', () => {
-      const firstIdx = allEventImages.findIndex(e => e.eventKey === key);
-      if (firstIdx !== -1) selectEvent(firstIdx);
+      eventFilterKey = (eventFilterKey === key) ? null : key;
+      closeEventsDetail();
+      buildEventsGrid();
+      highlightFilteredEvent();
     });
 
     list.appendChild(row);
@@ -216,6 +224,39 @@ function buildEventsList() {
 function formatEventDate(iso) {
   const [y, m, d] = iso.split('-');
   return `${d}.${m}.${y}`;
+}
+
+function highlightFilteredEvent() {
+  $('events-list').querySelectorAll('.event-list-item').forEach(el => {
+    el.classList.toggle('selected', el.dataset.eventKey === eventFilterKey);
+  });
+}
+
+/* ── Events: build photo grid (filtered or shuffled) ─────────────────── */
+function buildEventsGrid() {
+  const grid = $('events-grid');
+  grid.innerHTML = '';
+  const images = eventFilterKey
+    ? allEventImages.filter(ev => ev.eventKey === eventFilterKey)
+    : shuffledEventImages;
+
+  images.forEach(ev => {
+    grid.appendChild(makeEventGridItem(ev));
+  });
+}
+
+function makeEventGridItem(ev) {
+  const div = document.createElement('div');
+  div.className = 'gallery-item';
+
+  const img = document.createElement('img');
+  img.src = ev.src;
+  img.alt = ev.label;
+  img.loading = 'lazy';
+
+  div.appendChild(img);
+  div.addEventListener('click', () => selectEvent(ev.idx));
+  return div;
 }
 
 /* ── Events: select image ──────────────────────────────────────────── */
@@ -324,7 +365,7 @@ function closeEventsDetail() {
   selectedEventIdx = null;
   $('tab-events').classList.remove('detail-active');
   $('events-detail').hidden = true;
-  $('events-list').querySelectorAll('.event-list-item').forEach(el => el.classList.remove('selected'));
+  highlightFilteredEvent();   // restore highlight to reflect the active filter (if any)
 
   restoreNews();
   $('event-info').hidden = true;
@@ -475,6 +516,7 @@ function bindMobileMenu() {
 
 /* ── Helpers ───────────────────────────────────────────────────────── */
 function restoreNews() {
+  if (currentTab === 'events') return;   // events tab shows the events list instead
   const { text, expires } = newsConfig;
   if (!text) return;
   if (expires && new Date(expires) < new Date()) return;

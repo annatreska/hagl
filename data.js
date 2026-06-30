@@ -109,7 +109,7 @@ const eventFolders = {
   happening1_wernisaz: {
     label: 'Happening 1 / Wernisaż',
     date: '2025-11-17',
-    description: `17.11.2025, Wystawa „Pomiędzy"\nGaleria Otwarta (filia Uniwersytetu SWPS), al. Jana Pawła II 39A, Kraków\n\nWernisaż, happening oraz wykład odbyły się w ramach Festiwalu Sztuka do Rzeczy. Design w Krakowie.\n\nW wystawie udział wzięli: Wojciech Brzozowski, Ziemowit Kościelny, Miłosz Kozioł, prof. Magdalena Pińczyńska, Joanna Róg–Ociepka i dr Anna Treska-Siwoń.\n\nHappening kolektywu Have a Good Look: Joanna Róg–Ociepka, Anna Treska-Siwoń i widzowie.\n\nWykład: dr Kinga Blaschke.`,
+    description: `17.11.2025, Wystawa „Pomiędzy", Galeria Otwarta (filia Uniwersytetu SWPS), al. Jana Pawła II 39A, Kraków. Wernisaż, happening oraz wykład w ramach Festiwalu Sztuka do Rzeczy. Design w Krakowie. W wystawie udział wzięli: Wojciech Brzozowski, Ziemowit Kościelny, Miłosz Kozioł, prof. Magdalena Pińczyńska, Joanna Róg–Ociepka i dr Anna Treska-Siwoń. Happening kolektywu Have a Good Look: Joanna Róg–Ociepka, Anna Treska-Siwoń i widzowie. Wykład: dr Kinga Blaschke.`,
     links: [
       {
         text: 'Relacja prasowa w Gazecie Krakowskiej',
@@ -147,7 +147,7 @@ const eventFolders = {
   happening2: {
     label: 'Happening 2',
     date: '2025-11-28',
-    description: `28.11.2025, Wystawa „Pomiędzy" w ramach Festiwalu Sztuka do Rzeczy. Design w Krakowie.\nGaleria Otwarta (filia Uniwersytetu SWPS), al. Jana Pawła II 39A, Kraków\n\nHappening kolektywu Have a Good Look: Joanna Róg–Ociepka, Anna Treska-Siwoń i widzowie.`,
+    description: `28.11.2025, Wystawa „Pomiędzy" w ramach Festiwalu Sztuka do Rzeczy. Design w Krakowie. Galeria Otwarta (filia Uniwersytetu SWPS), al. Jana Pawła II 39A, Kraków. Happening kolektywu Have a Good Look: Joanna Róg–Ociepka, Anna Treska-Siwoń i widzowie.`,
     links: [],
     images: [
       `${ASSETS}/wydarzenia/happening2/1000010163.jpeg`,
@@ -173,7 +173,7 @@ const eventFolders = {
   happening3: {
     label: 'Happening 3 / Noc Muzeów',
     date: '2026-05-15',
-    description: `15.05.2026, Noc Muzeów z narzędziami kuchennymi\nMuzeum Inżynierii i Techniki, Kraków\n\nHappening kolektywu Have a Good Look: malowanie portretów ulubionych narzędzi kuchennych przyniesionych przez widzów.`,
+    description: `15.05.2026, Noc Muzeów z narzędziami kuchennymi, Muzeum Inżynierii i Techniki, Kraków. Wydarzenie towarzyszyło wystawie „Kuchnia od kuchni". Happening kolektywu Have a Good Look: malowanie portretów ulubionych narzędzi kuchennych przyniesionych przez widzów.`,
     links: [],
     images: [
       `${ASSETS}/wydarzenia/happening3/3_MIT_1_01.jpg`,
@@ -208,6 +208,17 @@ const eventFolders = {
 const allEventImages = Object.entries(eventFolders).flatMap(([key, ev]) =>
   ev.images.map(src => ({ src, eventKey: key, label: ev.label }))
 );
+allEventImages.forEach((ev, i) => { ev.idx = i; });
+
+// Shuffled copy (same objects, so .idx still points back into
+// allEventImages) used for the default "all events" grid view
+const shuffledEventImages = allEventImages.slice();
+(function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+})(shuffledEventImages);
 
 // Announcement link shown above the events list (e.g. upcoming happening).
 // Leave text empty to hide it.
