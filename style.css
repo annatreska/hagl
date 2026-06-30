@@ -278,6 +278,64 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 .gallery-item:hover img          { opacity: 0.82; }
 .gallery-item.selected img       { opacity: 0.35; }
 
+/* ── Events list (chronological) ─────────────────────────────────── */
+.events-list-wrap {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 56px 44px;
+}
+
+.tab-panel.detail-active .events-list-wrap {
+  flex: 0 0 50%;
+  width: 50%;
+}
+
+.event-announcement {
+  display: block;
+  font-size: 15px;
+  font-weight: var(--fw-bold);
+  line-height: 1.5;
+  padding-bottom: 22px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--black);
+  transition: opacity 0.15s;
+}
+.event-announcement:hover { opacity: 0.65; }
+.event-announcement[hidden] { display: none; }
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--black);
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.events-list .event-list-item:first-child { border-top: 1px solid var(--black); }
+.event-list-item:hover { opacity: 0.6; }
+.event-list-item.selected .event-list-label { font-weight: var(--fw-bold); }
+
+.event-list-label {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.event-list-date {
+  font-size: 12px;
+  opacity: 0.5;
+  white-space: nowrap;
+}
+
 /* ── Detail panel ─────────────────────────────────────────────────── */
 .detail-panel {
   flex: 0 0 50%;
@@ -613,6 +671,8 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   .masonry-grid { column-count: 2; }
   .tab-panel.detail-active .masonry-grid { column-count: 1; }
 
+  .events-list-wrap { padding: 44px 32px; }
+
   .sidebar { padding: 22px 20px 16px; }
   .logo { max-width: 180px; }
 }
@@ -691,6 +751,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 
   /* Detail view on mobile: hide thumbnails, show detail full-width */
   .tab-panel.detail-active .grid-wrap { display: none; }
+  .tab-panel.detail-active .events-list-wrap { display: none; }
   .tab-panel.detail-active .detail-panel {
     flex: 1;
     width: 100%;
@@ -699,6 +760,8 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 
   .masonry-grid { column-count: 2; }
   .tab-panel.detail-active .masonry-grid { column-count: 2; }
+
+  .events-list-wrap { padding: 28px 18px; }
 
   .detail-panel { padding: 36px 14px 36px; }
 }

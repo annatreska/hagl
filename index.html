@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;700&family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=16">
+  <link rel="stylesheet" href="style.css?v=17">
 </head>
 <body>
 
@@ -102,8 +102,9 @@
 
       <!-- Events tab -->
       <div class="tab-panel" id="tab-events" hidden>
-        <div class="grid-wrap" id="events-grid-wrap">
-          <div class="masonry-grid" id="events-grid"></div>
+        <div class="events-list-wrap" id="events-list-wrap">
+          <a class="event-announcement" id="event-announcement" href="#" target="_blank" rel="noopener" hidden></a>
+          <div class="events-list" id="events-list"></div>
         </div>
         <div class="detail-panel" id="events-detail" hidden>
           <button class="close-btn" id="events-close" aria-label="Zamknij">&times;</button>
@@ -170,7 +171,7 @@
     </div>
   </div>
 
-  <script src="data.js?v=5"></script>
-  <script src="script.js?v=4"></script>
+  <script src="data.js?v=6"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>

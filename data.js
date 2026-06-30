@@ -83,6 +83,7 @@ const artworks = [
 const eventFolders = {
   backstage: {
     label: 'Backstage',
+    date: '',
     description: '',
     links: [],
     images: [
@@ -107,6 +108,7 @@ const eventFolders = {
   },
   happening1_wernisaz: {
     label: 'Happening 1 / Wernisaż',
+    date: '2025-11-17',
     description: `17.11.2025, Wystawa „Pomiędzy"\nGaleria Otwarta (filia Uniwersytetu SWPS), al. Jana Pawła II 39A, Kraków\n\nWernisaż, happening oraz wykład odbyły się w ramach Festiwalu Sztuka do Rzeczy. Design w Krakowie.\n\nW wystawie udział wzięli: Wojciech Brzozowski, Ziemowit Kościelny, Miłosz Kozioł, prof. Magdalena Pińczyńska, Joanna Róg–Ociepka i dr Anna Treska-Siwoń.\n\nHappening kolektywu Have a Good Look: Joanna Róg–Ociepka, Anna Treska-Siwoń i widzowie.\n\nWykład: dr Kinga Blaschke.`,
     links: [
       {
@@ -144,6 +146,7 @@ const eventFolders = {
   },
   happening2: {
     label: 'Happening 2',
+    date: '2025-11-28',
     description: `28.11.2025, Wystawa „Pomiędzy" w ramach Festiwalu Sztuka do Rzeczy. Design w Krakowie.\nGaleria Otwarta (filia Uniwersytetu SWPS), al. Jana Pawła II 39A, Kraków\n\nHappening kolektywu Have a Good Look: Joanna Róg–Ociepka, Anna Treska-Siwoń i widzowie.`,
     links: [],
     images: [
@@ -167,8 +170,29 @@ const eventFolders = {
       `${ASSETS}/wydarzenia/happening2/all2.jpg`,
     ],
   },
+  happening3: {
+    label: 'Happening 3 / Noc Muzeów',
+    date: '2026-05-15',
+    description: `15.05.2026, Noc Muzeów z narzędziami kuchennymi\nMuzeum Inżynierii i Techniki, Kraków\n\nHappening kolektywu Have a Good Look: malowanie portretów ulubionych narzędzi kuchennych przyniesionych przez widzów.`,
+    links: [],
+    images: [
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_01.jpg`,
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_02.jpg`,
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_03.jpg`,
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_04.jpg`,
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_05.jpg`,
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_06.jpg`,
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_07.jpg`,
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_08.jpg`,
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_09.jpg`,
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_10.jpg`,
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_11.jpg`,
+      `${ASSETS}/wydarzenia/happening3/3_MIT_1_12.jpg`,
+    ],
+  },
   inne: {
     label: 'Inne',
+    date: '',
     description: '',
     links: [],
     images: [
@@ -179,18 +203,18 @@ const eventFolders = {
   },
 };
 
-// Flat list of all event images with event key attached, randomly shuffled
+// Flat list of all event images with event key attached, grouped by event
+// in folder-image order (used for prev/next navigation within an event)
 const allEventImages = Object.entries(eventFolders).flatMap(([key, ev]) =>
   ev.images.map(src => ({ src, eventKey: key, label: ev.label }))
 );
 
-// Fisher-Yates shuffle (deterministic seed based on page load)
-(function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-})(allEventImages);
+// Announcement link shown above the events list (e.g. upcoming happening).
+// Leave text empty to hide it.
+const announcementConfig = {
+  text: '',
+  url: '',
+};
 
 // News config – set text and expiry date (ISO string) to show news banner
 // Leave text empty or set expired date to hide the banner

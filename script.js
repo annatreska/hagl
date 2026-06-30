@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadNamesFromStorage();
   initNews();
   buildGallery();
-  buildEvents();
+  buildEventsList();
   bindMenu();
   bindGalleryDetail();
   bindEventsDetail();
@@ -90,11 +90,11 @@ function switchTab(tabName) {
 function buildGallery() {
   const grid = $('gallery-grid');
   artworks.forEach((art, i) => {
-    grid.appendChild(makeGridItem(art.imgF, art.author, i, 'gallery'));
+    grid.appendChild(makeGridItem(art.imgF, art.author, i));
   });
 }
 
-function makeGridItem(src, alt, index, mode) {
+function makeGridItem(src, alt, index) {
   const div = document.createElement('div');
   div.className = 'gallery-item';
   div.dataset.index = index;
@@ -105,10 +105,7 @@ function makeGridItem(src, alt, index, mode) {
   img.loading = 'lazy';
 
   div.appendChild(img);
-  div.addEventListener('click', () => {
-    if (mode === 'gallery') selectArtwork(index);
-    else                    selectEvent(index);
-  });
+  div.addEventListener('click', () => selectArtwork(index));
   return div;
 }
 
@@ -165,12 +162,60 @@ function closeGalleryDetail() {
   $('artwork-info').hidden = true;
 }
 
-/* ── Events: build grid ────────────────────────────────────────────── */
-function buildEvents() {
-  const grid = $('events-grid');
-  allEventImages.forEach((ev, i) => {
-    grid.appendChild(makeGridItem(ev.src, ev.label, i, 'events'));
+/* ── Events: build chronological list ────────────────────────────────── */
+function buildEventsList() {
+  // Announcement link (upcoming event) at the top
+  const announcement = $('event-announcement');
+  if (announcementConfig.text) {
+    announcement.textContent = announcementConfig.text;
+    announcement.href = announcementConfig.url || '#';
+    announcement.hidden = false;
+  } else {
+    announcement.hidden = true;
+  }
+
+  // Sort events newest → oldest; undated events sink to the bottom,
+  // keeping their original relative order.
+  const entries = Object.entries(eventFolders);
+  const sorted = entries.slice().sort((a, b) => {
+    const da = a[1].date, db = b[1].date;
+    if (!da && !db) return 0;
+    if (!da) return 1;
+    if (!db) return -1;
+    return db.localeCompare(da);
   });
+
+  const list = $('events-list');
+  sorted.forEach(([key, folder]) => {
+    const row = document.createElement('div');
+    row.className = 'event-list-item';
+    row.dataset.eventKey = key;
+
+    const label = document.createElement('span');
+    label.className = 'event-list-label';
+    label.textContent = folder.label;
+
+    row.appendChild(label);
+
+    if (folder.date) {
+      const date = document.createElement('span');
+      date.className = 'event-list-date';
+      date.textContent = formatEventDate(folder.date);
+      row.appendChild(date);
+    }
+
+    row.addEventListener('click', () => {
+      const firstIdx = allEventImages.findIndex(e => e.eventKey === key);
+      if (firstIdx !== -1) selectEvent(firstIdx);
+    });
+
+    list.appendChild(row);
+  });
+}
+
+function formatEventDate(iso) {
+  const [y, m, d] = iso.split('-');
+  return `${d}.${m}.${y}`;
 }
 
 /* ── Events: select image ──────────────────────────────────────────── */
@@ -205,9 +250,9 @@ function selectEvent(flatIndex) {
 
   updateEventNav(ev, flatIndex);
 
-  // Mark selected thumbnail
-  $('events-grid').querySelectorAll('.gallery-item').forEach((el, i) => {
-    el.classList.toggle('selected', i === flatIndex);
+  // Mark selected event in the list
+  $('events-list').querySelectorAll('.event-list-item').forEach(el => {
+    el.classList.toggle('selected', el.dataset.eventKey === ev.eventKey);
   });
 
   $('events-detail').scrollTop = 0;
@@ -279,7 +324,7 @@ function closeEventsDetail() {
   selectedEventIdx = null;
   $('tab-events').classList.remove('detail-active');
   $('events-detail').hidden = true;
-  $('events-grid').querySelectorAll('.gallery-item').forEach(el => el.classList.remove('selected'));
+  $('events-list').querySelectorAll('.event-list-item').forEach(el => el.classList.remove('selected'));
 
   restoreNews();
   $('event-info').hidden = true;
