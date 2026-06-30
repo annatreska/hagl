@@ -190,6 +190,30 @@ const eventFolders = {
       `${ASSETS}/wydarzenia/happening3/3_MIT_1_12.jpg`,
     ],
   },
+  polityka_i_cytryny: {
+    label: 'Polityka i cytryny',
+    date: '2026-06-20',
+    description: `20.06.2026, 16.00–18.00, Muzeum Inżynierii i Techniki, ul. św. Wawrzyńca 15, Kraków. „Polityka i cytryny" – spotkanie z projektantką dr Anną Treską-Siwoń o tym, jak zmiany społeczno-polityczne wpłynęły na kształt wyciskarek do cytryn (m.in. słynna „debata kuchenna" Chruszczow–Nixon, 1959). Wydarzenie otwiera cykl „Dizajn od kuchni" towarzyszący wystawie „Kuchnia od kuchni" w MIT – początek współpracy Uniwersytetu SWPS i Muzeum Inżynierii i Techniki pod patronatem magazynu projektowego Formy.`,
+    links: [
+      {
+        text: 'Strona wydarzenia na swps.pl',
+        url:  'https://swps.pl/my-uniwersytet/aktualnosci/wyklady-i-spotkania/38815-polityka-i-cytryny',
+      },
+    ],
+    images: [
+      `${ASSETS}/wydarzenia/polityka_i_cytryny/01.jpg`,
+      `${ASSETS}/wydarzenia/polityka_i_cytryny/IMG_0526.jpg`,
+      `${ASSETS}/wydarzenia/polityka_i_cytryny/IMG_0528.jpg`,
+      `${ASSETS}/wydarzenia/polityka_i_cytryny/IMG_0814.jpg`,
+      `${ASSETS}/wydarzenia/polityka_i_cytryny/IMG_0816.jpg`,
+      `${ASSETS}/wydarzenia/polityka_i_cytryny/IMG_0817.jpg`,
+      `${ASSETS}/wydarzenia/polityka_i_cytryny/IMG_0819.jpg`,
+      `${ASSETS}/wydarzenia/polityka_i_cytryny/IMG_0820.jpg`,
+      `${ASSETS}/wydarzenia/polityka_i_cytryny/IMG_0826.jpg`,
+      `${ASSETS}/wydarzenia/polityka_i_cytryny/przegrany480.mp4`,
+      `${ASSETS}/wydarzenia/polityka_i_cytryny/wygrany.mp4`,
+    ],
+  },
   inne: {
     label: 'Inne',
     date: '',

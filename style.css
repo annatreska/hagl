@@ -266,7 +266,8 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   overflow: hidden;
 }
 
-.gallery-item img {
+.gallery-item img,
+.gallery-item video {
   display: block;
   width: 100%;
   height: auto;
@@ -275,8 +276,10 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   transition: opacity 0.18s;
 }
 
-.gallery-item:hover img          { opacity: 0.82; }
-.gallery-item.selected img       { opacity: 0.35; }
+.gallery-item:hover img,
+.gallery-item:hover video        { opacity: 0.82; }
+.gallery-item.selected img,
+.gallery-item.selected video     { opacity: 0.35; }
 
 /* ── Events sidebar list (chronological) ─────────────────────────── */
 .events-sidebar {
