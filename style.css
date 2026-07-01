@@ -250,6 +250,18 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   width: 100%;
 }
 
+/* Gallery uses explicit JS column divs so pinned items reliably land at
+   the top of each column — flexbox overrides the CSS column-count above */
+#gallery-grid {
+  display: flex;
+  align-items: flex-start;
+  column-count: unset;
+}
+.masonry-col {
+  flex: 1;
+  min-width: 0;
+}
+
 /* Thumbnail mode: detail active → narrower panel → fewer columns */
 .tab-panel.detail-active .masonry-grid {
   column-count: 2;

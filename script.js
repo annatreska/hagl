@@ -62,11 +62,13 @@ function bindMenu() {
     });
   });
 
-  document.querySelector('.logo-link').addEventListener('click', e => {
-    e.preventDefault();
-    switchTab(currentTab);  // just reset detail view
-    closeGalleryDetail();
-    closeEventsDetail();
+  document.querySelectorAll('.logo-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      switchTab('gallery');
+      closeGalleryDetail();
+      closeEventsDetail();
+    });
   });
 }
 
@@ -102,24 +104,32 @@ function switchTab(tabName) {
 function buildGallery() {
   const grid = $('gallery-grid');
 
-  // Pinned: always first, in this order
-  const pinnedFirst = ['33','01','47','31','77','02','74','50','32','03','20','73','30','78','04','05','28'];
-  const pinnedSet   = new Set(pinnedFirst);
+  const pinnedNums = ['74','33','01','47','31','77','02','50','32','03','78','20','73','30','04','05','28'];
+  const pinnedSet  = new Set(pinnedNums);
+  const pinned     = pinnedNums.map(num => artworks.find(a => a.num === num)).filter(Boolean);
 
-  // Remaining artworks shuffled on every page load
   const rest = artworks.filter(a => !pinnedSet.has(a.num));
   for (let i = rest.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [rest[i], rest[j]] = [rest[j], rest[i]];
   }
 
-  const ordered = [
-    ...pinnedFirst.map(num => artworks.find(a => a.num === num)).filter(Boolean),
-    ...rest,
-  ];
+  const perCol = Math.ceil(pinned.length / 3); // 6
 
-  ordered.forEach(art => {
-    grid.appendChild(makeGridItem(art.imgF, art.author, artworks.indexOf(art)));
+  // Three explicit column divs — guaranteed placement, no CSS column-count guesswork
+  const colEls = [0, 1, 2].map(c => {
+    const col = document.createElement('div');
+    col.className = 'masonry-col';
+    pinned.slice(c * perCol, (c + 1) * perCol).forEach(art => {
+      col.appendChild(makeGridItem(art.imgF, art.author, artworks.indexOf(art)));
+    });
+    grid.appendChild(col);
+    return col;
+  });
+
+  // Shuffled items distributed round-robin across the three columns
+  rest.forEach((art, i) => {
+    colEls[i % 3].appendChild(makeGridItem(art.imgF, art.author, artworks.indexOf(art)));
   });
 }
 
