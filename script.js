@@ -101,8 +101,25 @@ function switchTab(tabName) {
 /* ── Gallery: build grid ───────────────────────────────────────────── */
 function buildGallery() {
   const grid = $('gallery-grid');
-  artworks.forEach((art, i) => {
-    grid.appendChild(makeGridItem(art.imgF, art.author, i));
+
+  // Pinned: always first, in this order
+  const pinnedFirst = ['33','01','47','31','77','02','74','50','32','03','20','73','30','78','04','05','28'];
+  const pinnedSet   = new Set(pinnedFirst);
+
+  // Remaining artworks shuffled on every page load
+  const rest = artworks.filter(a => !pinnedSet.has(a.num));
+  for (let i = rest.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [rest[i], rest[j]] = [rest[j], rest[i]];
+  }
+
+  const ordered = [
+    ...pinnedFirst.map(num => artworks.find(a => a.num === num)).filter(Boolean),
+    ...rest,
+  ];
+
+  ordered.forEach(art => {
+    grid.appendChild(makeGridItem(art.imgF, art.author, artworks.indexOf(art)));
   });
 }
 
@@ -154,9 +171,9 @@ function selectArtwork(index) {
   setInfo('info-pl',     art.namePL);
   setInfo('info-es',     art.nameES);
 
-  // Mark selected thumbnail
-  $('gallery-grid').querySelectorAll('.gallery-item').forEach((el, i) => {
-    el.classList.toggle('selected', i === index);
+  // Mark selected thumbnail (compare by data-index, not DOM position)
+  $('gallery-grid').querySelectorAll('.gallery-item').forEach(el => {
+    el.classList.toggle('selected', Number(el.dataset.index) === index);
   });
 
   // Scroll detail panel to top
