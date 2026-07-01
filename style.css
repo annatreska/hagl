@@ -273,8 +273,6 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   display: block;
   width: 100%;
   height: auto;
-  /* reserves space before the image loads — prevents column reflow/flicker */
-  aspect-ratio: 3 / 4;
   /* vertical-align removes phantom gap under inline images */
   vertical-align: top;
   transition: opacity 0.18s;
