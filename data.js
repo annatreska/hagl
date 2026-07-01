@@ -188,6 +188,9 @@ const eventFolders = {
       `${ASSETS}/wydarzenia/happening3/3_MIT_1_10.jpg`,
       `${ASSETS}/wydarzenia/happening3/3_MIT_1_11.jpg`,
       `${ASSETS}/wydarzenia/happening3/3_MIT_1_12.jpg`,
+      `${ASSETS}/wydarzenia/happening3/CEC2B8E9-566A-442F-8648-5202266D4A58_1_201_a.jpg`,
+      `${ASSETS}/wydarzenia/happening3/D4FB8CA8-F7F3-41F0-AF26-E8373705826C_1_201_a.jpg`,
+      `${ASSETS}/wydarzenia/happening3/MiT.jpg`,
     ],
   },
   polityka_i_cytryny: {
@@ -212,17 +215,6 @@ const eventFolders = {
       `${ASSETS}/wydarzenia/polityka_i_cytryny/IMG_0826.jpg`,
       `${ASSETS}/wydarzenia/polityka_i_cytryny/przegrany480.mp4`,
       `${ASSETS}/wydarzenia/polityka_i_cytryny/wygrany.mp4`,
-    ],
-  },
-  inne: {
-    label: 'Inne',
-    date: '',
-    description: '',
-    links: [],
-    images: [
-      `${ASSETS}/wydarzenia/inne/CEC2B8E9-566A-442F-8648-5202266D4A58_1_201_a.jpg`,
-      `${ASSETS}/wydarzenia/inne/D4FB8CA8-F7F3-41F0-AF26-E8373705826C_1_201_a.jpg`,
-      `${ASSETS}/wydarzenia/inne/MiT.jpg`,
     ],
   },
 };

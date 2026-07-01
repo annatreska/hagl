@@ -217,7 +217,11 @@ function buildEventsSidebarList() {
     }
 
     row.addEventListener('click', () => {
-      eventFilterKey = (eventFilterKey === key) ? null : key;
+      if (eventFilterKey === key) {
+        eventFilterKey = null;
+      } else {
+        eventFilterKey = key;
+      }
       closeEventsDetail();
       buildEventsGrid();
       highlightFilteredEvent();
@@ -236,6 +240,43 @@ function highlightFilteredEvent() {
   $('events-list').querySelectorAll('.event-list-item').forEach(el => {
     el.classList.toggle('selected', el.dataset.eventKey === eventFilterKey);
   });
+}
+
+/* ── Events: show info for a folder in the sidebar ──────────────────── */
+function showEventInfo(key) {
+  const folder = eventFolders[key];
+  $('artwork-info').hidden = true;
+  $('news-section').hidden = true;
+  $('event-info').hidden = false;
+
+  setInfo('info-event-label', folder.label);
+
+  const descEl = $('info-event-desc');
+  if (folder.description) {
+    descEl.textContent = folder.description;
+    descEl.hidden = false;
+  } else {
+    descEl.hidden = true;
+  }
+
+  const linksEl = $('info-event-links');
+  linksEl.innerHTML = '';
+  if (folder.links && folder.links.length) {
+    folder.links.forEach(link => {
+      const a = document.createElement('a');
+      a.href = link.url;
+      a.textContent = link.text;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.className = 'event-press-link';
+      linksEl.appendChild(a);
+    });
+    linksEl.hidden = false;
+  } else {
+    linksEl.hidden = true;
+  }
+
+  setInfo('info-event-pos', '');
 }
 
 /* ── Events: build photo grid (filtered or shuffled) ─────────────────── */
@@ -335,46 +376,15 @@ function selectEvent(flatIndex) {
 }
 
 function updateEventNav(ev, flatIndex) {
-  const folder = eventFolders[ev.eventKey];
+  showEventInfo(ev.eventKey);
 
-  // Find all images in the same event folder
   const siblings = allEventImages
     .map((e, i) => ({ ...e, flatIdx: i }))
     .filter(e => e.eventKey === ev.eventKey);
   const posInEvent = siblings.findIndex(s => s.flatIdx === flatIndex);
 
-  setInfo('info-event-label', ev.label);
-
-  // Description (preserve newlines)
-  const descEl = $('info-event-desc');
-  if (folder.description) {
-    descEl.textContent = folder.description;
-    descEl.hidden = false;
-  } else {
-    descEl.hidden = true;
-  }
-
-  // Links
-  const linksEl = $('info-event-links');
-  linksEl.innerHTML = '';
-  if (folder.links && folder.links.length) {
-    folder.links.forEach(link => {
-      const a = document.createElement('a');
-      a.href = link.url;
-      a.textContent = link.text;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.className = 'event-press-link';
-      linksEl.appendChild(a);
-    });
-    linksEl.hidden = false;
-  } else {
-    linksEl.hidden = true;
-  }
-
   setInfo('info-event-pos', `${posInEvent + 1} / ${siblings.length}`);
 
-  // Enable/disable nav buttons
   $('events-prev').disabled = posInEvent <= 0;
   $('events-next').disabled = posInEvent >= siblings.length - 1;
   $('events-prev').style.opacity = posInEvent <= 0                   ? '0.2' : '';
@@ -401,10 +411,14 @@ function closeEventsDetail() {
   $('tab-events').classList.remove('detail-active');
   $('events-detail').hidden = true;
   $('events-video').pause();
-  highlightFilteredEvent();   // restore highlight to reflect the active filter (if any)
+  highlightFilteredEvent();
 
-  restoreNews();
-  $('event-info').hidden = true;
+  if (eventFilterKey) {
+    showEventInfo(eventFilterKey);
+  } else {
+    restoreNews();
+    $('event-info').hidden = true;
+  }
 }
 
 /* ── Admin panel ───────────────────────────────────────────────────── */
