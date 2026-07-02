@@ -291,7 +291,15 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   object-fit: cover;
   /* vertical-align removes phantom gap under inline images */
   vertical-align: top;
-  transition: opacity 0.18s;
+  /* Invisible until loaded, then a soft fade-in (JS adds .loaded) —
+     no hard "pop" over the placeholder background */
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.gallery-item img.loaded,
+.gallery-item video.loaded {
+  opacity: 1;
 }
 
 .gallery-item:hover img,
@@ -677,7 +685,8 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 @media (max-width: 1099px) {
   :root { --sidebar-w: 260px; }
 
-  .masonry-grid { column-count: 2; }
+  /* Events grid keeps 3 columns — matches the gallery, which always
+     renders 3 explicit flex columns regardless of viewport width */
   .tab-panel.detail-active .masonry-grid { column-count: 1; }
 
   .sidebar { padding: 22px 20px 16px; }
@@ -764,13 +773,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
     border-left: none;
   }
 
-  .masonry-grid { column-count: 2; }
   .tab-panel.detail-active .masonry-grid { column-count: 2; }
 
   .detail-panel { padding: 36px 14px 36px; }
-}
-
-/* ── Very small phones (< 400px) ──────────────────────────────────── */
-@media (max-width: 399px) {
-  .masonry-grid { column-count: 1; }
 }
