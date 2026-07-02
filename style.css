@@ -284,7 +284,11 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 .gallery-item video {
   display: block;
   width: 100%;
-  height: auto;
+  /* Square crop: fixed thumbnail height reserves layout space before the
+     image loads → no reflow, no flicker, no per-image dimension data needed.
+     object-fit: cover crops (never distorts) the natural image. */
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   /* vertical-align removes phantom gap under inline images */
   vertical-align: top;
   transition: opacity 0.18s;
