@@ -281,6 +281,17 @@ const announcementConfig = {
 // News config – set text and expiry date (ISO string) to show news banner
 // Leave text empty or set expired date to hide the banner
 const newsConfig = {
-  text: 'Noc muzeów z narzędziami kuchennymi! 15 maja od godziny 19 zapraszamy na happening do Muzeum Inżynierii i Techniki w Krakowie. Przynieś swoje ulubione narzędzie kuchenne i namaluj z nami jego portret (lub pozwól nam go namalować). Powstałe prace będzie można odebrać po czasie ekspozycji w MIT.',
-  expires: '2026-06-04',
+  text: `3. Dizajn od kuchni: Projektantki
+17.10.2026, godz. 15.00, Muzeum Inżynierii i Techniki w Krakowie
+
+Podczas trzeciego wydarzenia organizowanego w ramach cyklu „Dizajn od kuchni" spotkamy się z Alicją Kobzą, autorką książki „Graficzki", aby przyjrzeć się problemom, z którymi mierzyły się jej bohaterki i wspólnie zastanowić się, co się zmieniło. Rozważymy, jaką rolę w tej sytuacji odgrywa narracja obowiązująca w projektowaniu i jego historii, a jaką relacje społeczne i sytuacja polityczna.
+
+Czytając „Graficzki" zastanawiamy się, jak to możliwe, że nie znaliśmy tych świetnych projektów wcześniej. Podobnie jest z projektowaniem dla kuchni. Do głównego nurtu historii dizajnu przebiła się frankfurcka kuchnia Margarete Schütte-Lihotzky, ale już niewiele osób kojarzy np. dzieła Barbary Brukalskiej, twórczyni kuchni otwartej na salon. A czy znamy prace dzisiejszych projektantek?
+
+Zapraszamy do spotkania z Autorką i wspólnego odkrywania uwarunkowań, w których tworzyły wyjątkowe kobiety – bohaterki książki Alicji Kobzy.
+
+Cykl organizowany we współpracy Uniwersytetu SWPS z Muzeum Inżynierii i Techniki, pod patronatem magazynu projektowego Formy.xyz
+
+Bilety: w ramach wstępu na wystawę „Kuchnia od kuchni"`,
+  expires: '2026-10-18',
 };

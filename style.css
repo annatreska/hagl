@@ -130,7 +130,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   border-top: 1px solid var(--black);
   padding-top: 14px;
 }
-.news-text { font-size: 13px; line-height: 1.6; }
+.news-text { font-size: 13px; line-height: 1.6; white-space: pre-line; }
 
 /* Artwork / event info */
 .artwork-info,
