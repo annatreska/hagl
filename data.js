@@ -252,6 +252,22 @@ const eventFolders = {
       `${ASSETS}/wydarzenia/zlota_szczotka/eb40d2d3-2834-4d2d-855f-e7c3290aa043.mp4`,
     ],
   },
+  projektantki: {
+    label: 'Projektantki. Spotkanie z Alicją Kobzą',
+    date: '2026-10-17',
+    description: '',
+    links: [],
+    images: [
+      `${ASSETS}/wydarzenia/projektantki/0fa7241c-7d40-4b45-ad54-444f42da2091.jpg`,
+      `${ASSETS}/wydarzenia/projektantki/4b1e0a8d-6b05-444a-98ee-5aeec439d0dd.jpg`,
+      `${ASSETS}/wydarzenia/projektantki/713fa7d0-8685-466a-a7e1-ea827fd831c5.jpg`,
+      `${ASSETS}/wydarzenia/projektantki/IMG_2743.jpg`,
+      `${ASSETS}/wydarzenia/projektantki/IMG_2745.jpg`,
+      `${ASSETS}/wydarzenia/projektantki/IMG_2746.jpg`,
+      `${ASSETS}/wydarzenia/projektantki/IMG_2747.jpg`,
+      `${ASSETS}/wydarzenia/projektantki/c2e69b13-0c73-4d45-8b06-ba92c30e9002.jpg`,
+    ],
+  },
 };
 
 // Flat list of all event images with event key attached, grouped by event
@@ -281,17 +297,13 @@ const announcementConfig = {
 // News config – set text and expiry date (ISO string) to show news banner
 // Leave text empty or set expired date to hide the banner
 const newsConfig = {
-  text: `3. Dizajn od kuchni: Projektantki
-17.10.2026, godz. 15.00, Muzeum Inżynierii i Techniki w Krakowie
+  text: `Przestrzeń kuchni
+8.11.2026, godz. 15.00, Muzeum Inżynierii i Techniki w Krakowie
 
-Podczas trzeciego wydarzenia organizowanego w ramach cyklu „Dizajn od kuchni" spotkamy się z Alicją Kobzą, autorką książki „Graficzki", aby przyjrzeć się problemom, z którymi mierzyły się jej bohaterki i wspólnie zastanowić się, co się zmieniło. Rozważymy, jaką rolę w tej sytuacji odgrywa narracja obowiązująca w projektowaniu i jego historii, a jaką relacje społeczne i sytuacja polityczna.
+Historia kuchni zaczyna się od paleniska, wokół którego gromadziła się rodzina. Ogień był jednak niebezpieczny, więc bogaci odsuwali go od swoich salonów. Przez lata kuchnia była miejscem ciężkiej pracy. Wraz z wprowadzeniem do niej od połowy XIX wieku wielu wynalazków, stała się laboratorium efektywności. Dziś często tak właśnie ją postrzegamy, choć jednocześnie wielu z nas marzy jednak o dawnym palenisku skupiającym bliskich.
 
-Czytając „Graficzki" zastanawiamy się, jak to możliwe, że nie znaliśmy tych świetnych projektów wcześniej. Podobnie jest z projektowaniem dla kuchni. Do głównego nurtu historii dizajnu przebiła się frankfurcka kuchnia Margarete Schütte-Lihotzky, ale już niewiele osób kojarzy np. dzieła Barbary Brukalskiej, twórczyni kuchni otwartej na salon. A czy znamy prace dzisiejszych projektantek?
+Na czwartym spotkaniu z cyklu Dizajn od kuchni prześledzimy drogę do dzisiejszych rozwiązań i poznamy projektantki, których nazwiska zniknęły z historii. Zastanowimy się też, czy rację miał Otl Aicher, który nie ufał projektantom niepotrafiącym gotować. Przyjrzymy się metodom badań, które pozwoliły doskonalić sprawne gotowanie i przeprowadzimy wspólnie testy efektywności obierania ziemniaków. Zachęcamy do przyniesienia swojego ulubionego narzędzia do obierania!
 
-Zapraszamy do spotkania z Autorką i wspólnego odkrywania uwarunkowań, w których tworzyły wyjątkowe kobiety – bohaterki książki Alicji Kobzy.
-
-Cykl organizowany we współpracy Uniwersytetu SWPS z Muzeum Inżynierii i Techniki, pod patronatem magazynu projektowego Formy.xyz
-
-Bilety: w ramach wstępu na wystawę „Kuchnia od kuchni"`,
-  expires: '2026-10-18',
+Cykl organizowany we współpracy Uniwersytetu SWPS z Muzeum Inżynierii i Techniki, pod patronatem magazynu projektowego Formy.xyz`,
+  expires: '2026-11-09',
 };
